@@ -1,1033 +1,501 @@
 <!DOCTYPE html>
-<html lang="tr" class="scroll-smooth">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rarity Software - Yenilikçi Yazılım Çözümleri</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#7c3aed', // Rarity'nin mor rengi
-                        secondary: '#ec4899', // Magenta/pembe ton
-                        accent: '#06b6d4',
-                        rarity: '#9333ea', // Özel Rarity mor
-                        diamond: '#f8fafc' // Elmas beyazı
-                    },
-                    animation: {
-                        'sparkle': 'sparkle 2s ease-in-out infinite',
-                        'float': 'float 3s ease-in-out infinite',
-                        'shimmer': 'shimmer 2.5s ease-in-out infinite',
-                        'bounce-slow': 'bounce 3s infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'fadeInUp': 'fadeInUp 0.8s ease-out',
-                        'slideInLeft': 'slideInLeft 0.8s ease-out',
-                        'slideInRight': 'slideInRight 0.8s ease-out'
-                    },
-                    keyframes: {
-                        sparkle: {
-                            '0%, 100%': { transform: 'scale(1) rotate(0deg)', opacity: '1' },
-                            '50%': { transform: 'scale(1.1) rotate(180deg)', opacity: '0.8' }
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-10px)' }
-                        },
-                        shimmer: {
-                            '0%': { backgroundPosition: '-200% 0' },
-                            '100%': { backgroundPosition: '200% 0' }
-                        },
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(30px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' }
-                        },
-                        slideInLeft: {
-                            '0%': { opacity: '0', transform: 'translateX(-50px)' },
-                            '100%': { opacity: '1', transform: 'translateX(0)' }
-                        },
-                        slideInRight: {
-                            '0%': { opacity: '0', transform: 'translateX(50px)' },
-                            '100%': { opacity: '1', transform: 'translateX(0)' }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        /* Rarity temalı özel stiller */
-        .sparkle-bg {
-            background: linear-gradient(45deg, #7c3aed, #ec4899, #9333ea, #f8fafc);
-            background-size: 400% 400%;
-            animation: shimmer 3s ease-in-out infinite;
-        }
-        
-        .diamond-pattern {
-            background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 2px, transparent 2px),
-                            radial-gradient(circle at 80% 50%, rgba(255,255,255,0.1) 2px, transparent 2px);
-            background-size: 40px 40px;
-        }
-        
-        .gem-shadow {
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3), 0 6px 20px rgba(236, 72, 153, 0.2);
-        }
-        
-        .hover-lift {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .hover-lift:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.4);
-        }
-        
-        .sparkle::before {
-            content: '✨';
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            animation: sparkle 2s ease-in-out infinite;
-        }
-        
-        .rarity-gradient {
-            background: linear-gradient(135deg, #7c3aed 0%, #ec4899 50%, #9333ea 100%);
-        }
-        
-        .text-sparkle {
-            background: linear-gradient(45deg, #7c3aed, #ec4899, #9333ea, #f8fafc, #7c3aed);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: shimmer 3s ease-in-out infinite;
-        }
-        
-        .floating-gems {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-        }
-        
-        .floating-gems::before,
-        .floating-gems::after {
-            content: '💎';
-            position: absolute;
-            font-size: 1.5rem;
-            opacity: 0.1;
-            animation: float 4s ease-in-out infinite;
-        }
-        
-        .floating-gems::before {
-            top: 20%;
-            left: 10%;
-            animation-delay: -1s;
-        }
-        
-        .floating-gems::after {
-            top: 60%;
-            right: 15%;
-            animation-delay: -2s;
-        }
-        
-        /* Fix for animation classes */
-        .animate-fadeInUp {
-            animation: fadeInUp 0.8s ease-out both;
-        }
-        
-        .animate-slideInLeft {
-            animation: slideInLeft 0.8s ease-out both;
-        }
-        
-        .animate-slideInRight {
-            animation: slideInRight 0.8s ease-out both;
-        }
-        
-        /* Enhanced background contrasts */
-        .hero-overlay {
-            background: linear-gradient(135deg, 
-                rgba(30, 27, 75, 0.8) 0%, 
-                rgba(88, 28, 135, 0.7) 50%, 
-                rgba(157, 23, 77, 0.8) 100%);
-        }
-        
-        .section-overlay {
-            background: linear-gradient(135deg, 
-                rgba(15, 23, 42, 0.05) 0%, 
-                rgba(88, 28, 135, 0.03) 100%);
-        }
-        
-        .text-shadow {
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        
-        /* Better visibility for all text elements */
-        .hero-text {
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-        }
-    </style>
+    <title>!!! DEMO !!! Rarity Software - Cutting-Edge Software Solutions</title>
+    <meta name="description" content="Modern software solutions for the digital age">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css">
 </head>
-<body class="bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white backdrop-blur-sm shadow-lg fixed w-full top-0 z-50 border-b border-purple-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center group">
-                        <i class="fas fa-gem text-primary text-2xl mr-2 animate-sparkle group-hover:text-secondary transition-colors duration-300"></i>
-                        <span class="text-xl font-bold text-gray-900 group-hover:text-sparkle transition-all duration-300">Rarity Software</span>
-                        <span class="ml-2 text-xs text-primary opacity-70">✨ Boutique</span>
-                    </div>
-                </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#anasayfa" class="text-gray-700 hover:text-primary transition duration-300 relative group">
-                        Ana Sayfa
-                        <span class="absolute inset-x-0 bottom-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-center"></span>
-                    </a>
-                    <a href="#hakkimizda" class="text-gray-700 hover:text-primary transition duration-300 relative group">
-                        Hakkımızda
-                        <span class="absolute inset-x-0 bottom-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-center"></span>
-                    </a>
-                    <a href="#projeler" class="text-gray-700 hover:text-primary transition duration-300 relative group">
-                        Projeler
-                        <span class="absolute inset-x-0 bottom-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-center"></span>
-                    </a>
-                    <a href="#ekip" class="text-gray-700 hover:text-primary transition duration-300 relative group">
-                        Ekibimiz
-                        <span class="absolute inset-x-0 bottom-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-center"></span>
-                    </a>
-                    <a href="#iletisim" class="rarity-gradient text-white px-6 py-2 rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300 font-semibold relative overflow-hidden">
-                        <span class="relative z-10">💎 İletişim</span>
-                    </a>
-                </div>
-                <div class="md:hidden flex items-center">
-                    <button class="mobile-menu-button text-gray-700 hover:text-primary transition-colors duration-300">
-                        <i class="fas fa-bars text-xl"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Mobile menu -->
-        <div class="mobile-menu hidden md:hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg">
-                <a href="#anasayfa" class="block px-3 py-2 text-gray-700 hover:text-primary">Ana Sayfa</a>
-                <a href="#hakkimizda" class="block px-3 py-2 text-gray-700 hover:text-primary">Hakkımızda</a>
-                <a href="#projeler" class="block px-3 py-2 text-gray-700 hover:text-primary">Projeler</a>
-                <a href="#ekip" class="block px-3 py-2 text-gray-700 hover:text-primary">Ekibimiz</a>
-                <a href="#iletisim" class="block px-3 py-2 text-gray-700 hover:text-primary">İletişim</a>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section id="anasayfa" class="relative sparkle-bg diamond-pattern min-h-screen flex items-center pt-16 overflow-hidden">
-        <div class="floating-gems"></div>
-        <div class="absolute inset-0 hero-overlay"></div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 z-10">
-            <div class="text-center">
-                <div class="animate-fadeInUp">
-                    <h1 class="text-4xl md:text-7xl font-bold text-white mb-6 relative drop-shadow-2xl">
-                        <span class="inline-block animate-float text-shadow">Geleceğin</span> 
-                        <span class="inline-block animate-float text-shadow" style="animation-delay: 0.2s;">Yazılımlarını</span>
-                        <br>
-                        <span class="text-yellow-200 animate-pulse-slow inline-block drop-shadow-lg" style="animation-delay: 0.4s;">✨ Bugün Yaratıyoruz ✨</span>
-                    </h1>
-                </div>
-                <div class="animate-fadeInUp" style="animation-delay: 0.3s;">
-                    <p class="text-xl md:text-2xl text-white mb-8 max-w-4xl mx-auto leading-relaxed drop-shadow-lg">
-                        <strong class="text-yellow-200">Rarity Software</strong> olarak, 
-                        <span class="italic text-purple-100">zarafet</span> ve <span class="italic text-pink-100">mükemmellik</span> ile 
-                        işletmenizin dijital dönüşümünü gerçekleştiriyoruz. 
-                        <br>
-                        <span class="text-lg text-yellow-100 mt-3 block font-medium drop-shadow-md">
-                            💎 "Darling, sadece en iyisini hak ediyorsunuz!" 💎
-                        </span>
-                    </p>
-                </div>
-                <div class="flex flex-col sm:flex-row gap-6 justify-center animate-fadeInUp" style="animation-delay: 0.6s;">
-                    <a href="#projeler" class="group bg-white text-primary px-8 py-4 rounded-full font-semibold hover:bg-purple-50 transition-all duration-300 transform hover:scale-105 gem-shadow relative overflow-hidden">
-                        <span class="relative z-10 flex items-center justify-center">
-                            <i class="fas fa-sparkles mr-2 group-hover:animate-spin"></i>
-                            Projelerimizi İncele
-                        </span>
-                    </a>
-                    <a href="#iletisim" class="group border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-primary transition-all duration-300 transform hover:scale-105 relative overflow-hidden">
-                        <span class="relative z-10 flex items-center justify-center">
-                            <i class="fas fa-gem mr-2 group-hover:animate-bounce"></i>
-                            İletişime Geç
-                        </span>
-                    </a>
-                </div>
-                
-                <!-- Floating stats -->
-                <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 animate-fadeInUp" style="animation-delay: 0.9s;">
-                    <div class="bg-white/20 backdrop-blur-md rounded-2xl p-6 hover-lift border border-white/10">
-                        <div class="text-3xl font-bold text-yellow-200 mb-2 drop-shadow-md">50+ ✨</div>
-                        <div class="text-white font-medium drop-shadow-sm">Büyülü Projeler</div>
-                    </div>
-                    <div class="bg-white/20 backdrop-blur-md rounded-2xl p-6 hover-lift border border-white/10" style="animation-delay: 0.1s;">
-                        <div class="text-3xl font-bold text-yellow-200 mb-2 drop-shadow-md">💎 100%</div>
-                        <div class="text-white font-medium drop-shadow-sm">Memnuniyet</div>
-                    </div>
-                    <div class="bg-white/20 backdrop-blur-md rounded-2xl p-6 hover-lift border border-white/10" style="animation-delay: 0.2s;">
-                        <div class="text-3xl font-bold text-yellow-200 mb-2 drop-shadow-md">⭐ 5 Yıl</div>
-                        <div class="text-white font-medium drop-shadow-sm">Deneyim</div>
-                    </div>
-                </div>
-            </div>
+<body>
+    <div class="app">
+        <!-- Background Elements -->
+        <div class="background-elements">
+            <div class="bg-blob bg-blob-1"></div>
+            <div class="bg-blob bg-blob-2"></div>
+            <div class="bg-blob bg-blob-3"></div>
         </div>
-        
-        <!-- Scroll indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <i class="fas fa-chevron-down text-white text-2xl opacity-70"></i>
-        </div>
-    </section>
 
-    <!-- Features Section -->
-    <section class="py-20 bg-gradient-to-b from-white to-purple-50 relative">
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-20 left-10 text-purple-300 text-4xl animate-float">💎</div>
-            <div class="absolute top-40 right-20 text-pink-300 text-3xl animate-float" style="animation-delay: 1s;">✨</div>
-            <div class="absolute bottom-20 left-1/4 text-purple-300 text-3xl animate-float" style="animation-delay: 2s;">⭐</div>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div class="text-center mb-16 animate-fadeInUp">
-                <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
-                    Neden <span class="text-sparkle">Rarity Software</span>? 💜
-                </h2>
-                <p class="text-xl text-gray-600 max-w-4xl mx-auto">
-                    Rarity'nin mottosu gibi: <span class="italic text-primary">"Generosity and attention to detail"</span> 
-                    - Modern teknolojiler ve mükemmeliyetçi yaklaşımımızla fark yaratıyoruz
-                </p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="text-center p-8 rounded-2xl hover-lift bg-white/80 backdrop-blur-sm gem-shadow group animate-slideInLeft">
-                    <div class="rarity-gradient w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:animate-pulse">
-                        <i class="fas fa-magic text-white text-3xl"></i>
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <nav class="nav">
+                    <div class="nav-brand">
+                        <div class="logo">
+                            <i data-lucide="code"></i>
+                        </div>
+                        <span class="brand-text">Rarity Software</span>
                     </div>
-                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">✨ Büyülü Geliştirme</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        Agile metodoloji ile projelerinizi en zarif şekilde ve en kısa sürede hayata geçiriyoruz. 
-                        Her detay mükemmel olana kadar çalışıyoruz.
-                    </p>
-                </div>
-                <div class="text-center p-8 rounded-2xl hover-lift bg-white/80 backdrop-blur-sm gem-shadow group animate-fadeInUp" style="animation-delay: 0.2s;">
-                    <div class="bg-gradient-to-br from-secondary to-accent w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:animate-pulse">
-                        <i class="fas fa-gem text-white text-3xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">💎 Nadir Teknolojiler</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        En güncel ve özel teknolojiler ile gelecek-odaklı çözümler. 
-                        Sıradan değil, nadir ve değerli olanı tercih ediyoruz.
-                    </p>
-                </div>
-                <div class="text-center p-8 rounded-2xl hover-lift bg-white/80 backdrop-blur-sm gem-shadow group animate-slideInRight" style="animation-delay: 0.4s;">
-                    <div class="bg-gradient-to-br from-accent to-primary w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:animate-pulse">
-                        <i class="fas fa-crown text-white text-3xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">👑 Boutique Ekip</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        Seçkin geliştiriciler ve tasarımcılardan oluşan boutique ekibimiz. 
-                        Her müşteriye özel, kişiselleştirilmiş hizmet anlayışı.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="hakkimizda" class="py-20 bg-gradient-to-br from-purple-50 to-pink-50 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-5">
-            <div class="absolute top-10 left-1/4 text-6xl animate-float">💎</div>
-            <div class="absolute bottom-20 right-1/4 text-5xl animate-float" style="animation-delay: 1.5s;">✨</div>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div class="animate-slideInLeft">
-                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
-                        Hakkımızda <span class="text-sparkle">💜</span>
-                    </h2>
-                    <div class="space-y-6 text-lg text-gray-700 leading-relaxed">
-                        <p class="border-l-4 border-primary pl-6 italic">
-                            <span class="font-semibold text-primary">Rarity Software</span>, 2020 yılında 
-                            <span class="font-semibold">"Excellence in every detail"</span> felsefesi ile kurulan 
-                            ve yazılım geliştirme alanında uzmanlaşmış boutique bir teknoloji atölyesidir.
-                        </p>
-                        <p>
-                            Tıpkı My Little Pony'deki Rarity karakteri gibi, müşterilerimizin ihtiyaçlarını 
-                            <span class="text-primary font-semibold">zarafet</span> ve 
-                            <span class="text-secondary font-semibold">mükemmellik</span> ile anlayarak, 
-                            onlara özel çözümler tasarlıyoruz.
-                        </p>
-                        <p>
-                            Web uygulamaları, mobil uygulamalar ve kurumsal yazılım çözümleri konularında 
-                            geniş deneyime sahip <span class="text-rarity font-semibold">seçkin ekibimizle</span>, 
-                            her ölçekte projeye boutique yaklaşım ile hizmet veriyoruz.
-                        </p>
-                    </div>
-                    <div class="grid grid-cols-2 gap-6 mt-8">
-                        <div class="text-center p-6 bg-white/70 backdrop-blur-sm rounded-2xl hover-lift gem-shadow">
-                            <div class="text-4xl font-bold text-primary mb-2 animate-pulse-slow">50+ ✨</div>
-                            <div class="text-gray-600 font-medium">Büyülü Projeler</div>
-                        </div>
-                        <div class="text-center p-6 bg-white/70 backdrop-blur-sm rounded-2xl hover-lift gem-shadow">
-                            <div class="text-4xl font-bold text-secondary mb-2 animate-pulse-slow">30+ 💎</div>
-                            <div class="text-gray-600 font-medium">Mutlu Müşteri</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="relative animate-slideInRight">
-                    <div class="sparkle-bg diamond-pattern rounded-3xl p-10 text-white relative overflow-hidden hover-lift">
-                        <div class="absolute inset-0 bg-gradient-to-br from-purple-900/60 to-pink-900/60"></div>
-                        <div class="absolute top-4 right-4 text-3xl animate-sparkle">💎</div>
-                        <div class="relative z-10">
-                            <h3 class="text-3xl font-bold mb-6 flex items-center drop-shadow-lg">
-                                <i class="fas fa-star mr-3 animate-spin-slow"></i>
-                                Vizyonumuz
-                            </h3>
-                            <p class="text-xl leading-relaxed drop-shadow-md">
-                                "Darling, sadece en iyisini hak ediyorsunuz!" mottosu ile teknolojinin gücünü 
-                                kullanarak, işletmelerin dijital dünyada 
-                                <span class="font-bold text-yellow-200">parlak</span> bir gelecek yaşamasını sağlamak 
-                                ve yazılım sektöründe <span class="font-bold text-yellow-200">nadir</span> bir şirket olmak.
-                            </p>
-                            <div class="mt-6 flex items-center space-x-4">
-                                <div class="w-3 h-3 bg-yellow-200 rounded-full animate-ping"></div>
-                                <span class="text-yellow-100 italic drop-shadow-sm">"Generosity • Excellence • Innovation"</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projeler" class="py-20 bg-white relative overflow-hidden">
-        <div class="absolute inset-0 opacity-5">
-            <div class="absolute top-1/4 left-10 text-5xl animate-float">⭐</div>
-            <div class="absolute bottom-1/4 right-16 text-4xl animate-float" style="animation-delay: 2s;">💎</div>
-            <div class="absolute top-3/4 left-1/3 text-3xl animate-float" style="animation-delay: 1s;">✨</div>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div class="text-center mb-16 animate-fadeInUp">
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                    Projelerimiz <span class="text-sparkle">✨</span>
-                </h2>
-                <p class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                    Çeşitli sektörlerden müşterilerimiz için geliştirdiğimiz 
-                    <span class="text-primary font-semibold">nadir</span> ve 
-                    <span class="text-secondary font-semibold">değerli</span> projeler
-                </p>
-                <div class="mt-4 text-sm text-gray-500 italic">
-                    "Every project is a masterpiece!" - Rarity's Philosophy 💎
-                </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <!-- Project 1 -->
-                <div class="group bg-white rounded-3xl shadow-xl overflow-hidden hover-lift transition-all duration-500 border border-purple-100 animate-slideInLeft">
-                    <div class="sparkle-bg h-56 flex items-center justify-center relative overflow-hidden">
-                        <div class="absolute inset-0 diamond-pattern"></div>
-                        <i class="fas fa-shopping-cart text-white text-6xl relative z-10 group-hover:animate-bounce"></i>
-                        <div class="absolute top-4 right-4 text-white text-xl animate-sparkle">✨</div>
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-semibold text-gray-900 mb-3 group-hover:text-primary transition-colors">
-                            💎 Luxury E-Commerce
-                        </h3>
-                        <p class="text-gray-600 mb-6 leading-relaxed">
-                            Zarif ve kullanıcı dostu premium e-ticaret çözümü. 
-                            React ve Node.js ile boutique alışveriş deneyimi.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-full text-sm font-medium">React</span>
-                            <span class="bg-gradient-to-r from-secondary to-accent text-white px-4 py-2 rounded-full text-sm font-medium">Node.js</span>
-                            <span class="bg-gradient-to-r from-accent to-primary text-white px-4 py-2 rounded-full text-sm font-medium">MongoDB</span>
-                        </div>
-                        <div class="text-right">
-                            <button class="text-primary hover:text-secondary transition-colors group-hover:animate-pulse">
-                                <i class="fas fa-external-link-alt mr-2"></i>Detayları Gör
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 2 -->
-                <div class="group bg-white rounded-3xl shadow-xl overflow-hidden hover-lift transition-all duration-500 border border-pink-100 animate-fadeInUp" style="animation-delay: 0.2s;">
-                    <div class="bg-gradient-to-br from-secondary to-accent h-56 flex items-center justify-center relative overflow-hidden diamond-pattern">
-                        <i class="fas fa-mobile-alt text-white text-6xl relative z-10 group-hover:animate-bounce"></i>
-                        <div class="absolute top-4 right-4 text-white text-xl animate-sparkle" style="animation-delay: 0.5s;">💎</div>
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-semibold text-gray-900 mb-3 group-hover:text-secondary transition-colors">
-                            ⭐ Magical Mobile App
-                        </h3>
-                        <p class="text-gray-600 mb-6 leading-relaxed">
-                            Cross-platform büyülü mobil deneyim. React Native ile 
-                            iOS ve Android platformları için premium çözüm.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-gradient-to-r from-secondary to-accent text-white px-4 py-2 rounded-full text-sm font-medium">React Native</span>
-                            <span class="bg-gradient-to-r from-accent to-primary text-white px-4 py-2 rounded-full text-sm font-medium">Firebase</span>
-                            <span class="bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-full text-sm font-medium">TypeScript</span>
-                        </div>
-                        <div class="text-right">
-                            <button class="text-secondary hover:text-accent transition-colors group-hover:animate-pulse">
-                                <i class="fas fa-external-link-alt mr-2"></i>Detayları Gör
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 3 -->
-                <div class="group bg-white rounded-3xl shadow-xl overflow-hidden hover-lift transition-all duration-500 border border-cyan-100 animate-slideInRight" style="animation-delay: 0.4s;">
-                    <div class="bg-gradient-to-br from-accent to-primary h-56 flex items-center justify-center relative overflow-hidden diamond-pattern">
-                        <i class="fas fa-chart-line text-white text-6xl relative z-10 group-hover:animate-bounce"></i>
-                        <div class="absolute top-4 right-4 text-white text-xl animate-sparkle" style="animation-delay: 1s;">⚡</div>
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-semibold text-gray-900 mb-3 group-hover:text-accent transition-colors">
-                            🔮 Crystal Analytics
-                        </h3>
-                        <p class="text-gray-600 mb-6 leading-relaxed">
-                            Büyük veri analizi ve kristal berraklığında görselleştirme platformu. 
-                            AI destekli akıllı öngörüler.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-gradient-to-r from-accent to-primary text-white px-4 py-2 rounded-full text-sm font-medium">Python</span>
-                            <span class="bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-full text-sm font-medium">Django</span>
-                            <span class="bg-gradient-to-r from-secondary to-accent text-white px-4 py-2 rounded-full text-sm font-medium">PostgreSQL</span>
-                        </div>
-                        <div class="text-right">
-                            <button class="text-accent hover:text-primary transition-colors group-hover:animate-pulse">
-                                <i class="fas fa-external-link-alt mr-2"></i>Detayları Gör
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Call to action -->
-            <div class="text-center mt-16 animate-fadeInUp" style="animation-delay: 0.6s;">
-                <a href="#iletisim" class="inline-flex items-center rarity-gradient text-white px-8 py-4 rounded-full font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300">
-                    <i class="fas fa-sparkles mr-3 animate-spin-slow"></i>
-                    Sizin İçin de Bir Şeyler Yaratalım
-                    <i class="fas fa-arrow-right ml-3 group-hover:translate-x-1 transition-transform"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Team Section -->
-    <section id="ekip" class="py-20 bg-gradient-to-br from-purple-50 via-pink-50 to-purple-50 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-20 right-20 text-5xl animate-float">👑</div>
-            <div class="absolute bottom-20 left-20 text-4xl animate-float" style="animation-delay: 1s;">💎</div>
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl animate-float" style="animation-delay: 2s;">✨</div>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div class="text-center mb-16 animate-fadeInUp">
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                    Boutique Ekibimiz <span class="text-sparkle">👑</span>
-                </h2>
-                <p class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                    Deneyimli ve tutkulu geliştiricilerden oluşan 
-                    <span class="text-primary font-semibold">seçkin</span> ekibimiz
-                </p>
-                <div class="mt-4 text-sm text-gray-500 italic">
-                    "The best team for the most fabulous projects!" 💜
-                </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <!-- Team Member 1 -->
-                <div class="group bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-8 text-center hover-lift transition-all duration-500 gem-shadow animate-slideInLeft">
-                    <div class="relative mb-6">
-                        <div class="w-28 h-28 rarity-gradient rounded-full flex items-center justify-center mx-auto mb-4 group-hover:animate-pulse relative overflow-hidden">
-                            <i class="fas fa-user-tie text-white text-4xl relative z-10"></i>
-                            <div class="absolute inset-0 diamond-pattern"></div>
-                        </div>
-                        <div class="absolute -top-2 -right-2 text-2xl animate-sparkle">👑</div>
-                    </div>
-                    <h3 class="text-2xl font-semibold text-gray-900 mb-2 group-hover:text-primary transition-colors">
-                        Ahmet Yılmaz
-                    </h3>
-                    <p class="text-primary font-medium mb-3 text-lg">CEO & Kurucu Büyücü</p>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        10+ yıl yazılım geliştirme büyücülüğü. Full-stack geliştirici ve 
-                        proje orkestra şefi. "Darling, mükemmellik bir seçim!"
-                    </p>
-                    <div class="flex justify-center space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-primary transition-colors hover:scale-110 transform">
-                            <i class="fab fa-linkedin text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-primary transition-colors hover:scale-110 transform">
-                            <i class="fab fa-github text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-primary transition-colors hover:scale-110 transform">
-                            <i class="fab fa-twitter text-xl"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Team Member 2 -->
-                <div class="group bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-8 text-center hover-lift transition-all duration-500 gem-shadow animate-fadeInUp" style="animation-delay: 0.2s;">
-                    <div class="relative mb-6">
-                        <div class="w-28 h-28 bg-gradient-to-br from-secondary to-accent rounded-full flex items-center justify-center mx-auto mb-4 group-hover:animate-pulse relative overflow-hidden">
-                            <i class="fas fa-palette text-white text-4xl relative z-10"></i>
-                            <div class="absolute inset-0 diamond-pattern"></div>
-                        </div>
-                        <div class="absolute -top-2 -right-2 text-2xl animate-sparkle" style="animation-delay: 0.5s;">💎</div>
-                    </div>
-                    <h3 class="text-2xl font-semibold text-gray-900 mb-2 group-hover:text-secondary transition-colors">
-                        Zeynep Demir
-                    </h3>
-                    <p class="text-secondary font-medium mb-3 text-lg">CTO & Tasarım Kraliçesi</p>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        Frontend ve UX/UI sanatçısı. Modern web teknolojileri konusunda 
-                        kristal berraklığında bilgi. "Beauty meets functionality!"
-                    </p>
-                    <div class="flex justify-center space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-secondary transition-colors hover:scale-110 transform">
-                            <i class="fab fa-linkedin text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-secondary transition-colors hover:scale-110 transform">
-                            <i class="fab fa-github text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-secondary transition-colors hover:scale-110 transform">
-                            <i class="fab fa-twitter text-xl"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Team Member 3 -->
-                <div class="group bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-8 text-center hover-lift transition-all duration-500 gem-shadow animate-slideInRight" style="animation-delay: 0.4s;">
-                    <div class="relative mb-6">
-                        <div class="w-28 h-28 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:animate-pulse relative overflow-hidden">
-                            <i class="fas fa-server text-white text-4xl relative z-10"></i>
-                            <div class="absolute inset-0 diamond-pattern"></div>
-                        </div>
-                        <div class="absolute -top-2 -right-2 text-2xl animate-sparkle" style="animation-delay: 1s;">⚡</div>
-                    </div>
-                    <h3 class="text-2xl font-semibold text-gray-900 mb-2 group-hover:text-accent transition-colors">
-                        Mehmet Kaya
-                    </h3>
-                    <p class="text-accent font-medium mb-3 text-lg">Backend Sihirbazı</p>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        Mikroservis mimarisi ve bulut teknolojileri büyücüsü. 
-                        Scalable sistem mimarı. "Infrastructure is my canvas!"
-                    </p>
-                    <div class="flex justify-center space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-accent transition-colors hover:scale-110 transform">
-                            <i class="fab fa-linkedin text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-accent transition-colors hover:scale-110 transform">
-                            <i class="fab fa-github text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-accent transition-colors hover:scale-110 transform">
-                            <i class="fab fa-twitter text-xl"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Team values -->
-            <div class="mt-16 text-center animate-fadeInUp" style="animation-delay: 0.6s;">
-                <div class="bg-white/50 backdrop-blur-sm rounded-3xl p-8 max-w-4xl mx-auto gem-shadow">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">
-                        Ekip Değerlerimiz <span class="text-sparkle">✨</span>
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="text-center">
-                            <div class="text-3xl mb-2">💎</div>
-                            <div class="font-semibold text-primary">Generosity</div>
-                            <div class="text-sm text-gray-600">Cömert bilgi paylaşımı</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-3xl mb-2">👑</div>
-                            <div class="font-semibold text-secondary">Excellence</div>
-                            <div class="text-sm text-gray-600">Mükemmellik arayışı</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-3xl mb-2">✨</div>
-                            <div class="font-semibold text-accent">Innovation</div>
-                            <div class="text-sm text-gray-600">Sürekli yenilik</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="iletisim" class="py-20 bg-gradient-to-br from-white to-purple-50 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-5">
-            <div class="absolute top-20 left-20 text-4xl animate-float">💎</div>
-            <div class="absolute bottom-20 right-20 text-5xl animate-float" style="animation-delay: 1s;">✨</div>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div class="text-center mb-16 animate-fadeInUp">
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                    İletişim <span class="text-sparkle">💎</span>
-                </h2>
-                <p class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                    Projeleriniz hakkında konuşmak için bizimle iletişime geçin
-                </p>
-                <div class="mt-4 text-sm text-gray-500 italic">
-                    "Darling, let's create something fabulous together!" ✨
-                </div>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <div class="animate-slideInLeft">
-                    <h3 class="text-3xl font-bold text-gray-900 mb-8 flex items-center">
-                        <i class="fas fa-envelope mr-3 text-primary"></i>
-                        Bizimle İletişime Geçin
-                    </h3>
-                    <div class="space-y-6">
-                        <div class="flex items-center p-4 bg-white/80 backdrop-blur-sm rounded-2xl hover-lift gem-shadow">
-                            <div class="rarity-gradient w-16 h-16 rounded-full flex items-center justify-center mr-6">
-                                <i class="fas fa-envelope text-white text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-gray-900 font-semibold text-lg">E-posta</p>
-                                <p class="text-primary font-medium">info@raritysoftware.com</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center p-4 bg-white/80 backdrop-blur-sm rounded-2xl hover-lift gem-shadow">
-                            <div class="bg-gradient-to-br from-secondary to-accent w-16 h-16 rounded-full flex items-center justify-center mr-6">
-                                <i class="fas fa-phone text-white text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-gray-900 font-semibold text-lg">Telefon</p>
-                                <p class="text-secondary font-medium">+90 (212) 123 45 67</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center p-4 bg-white/80 backdrop-blur-sm rounded-2xl hover-lift gem-shadow">
-                            <div class="bg-gradient-to-br from-accent to-primary w-16 h-16 rounded-full flex items-center justify-center mr-6">
-                                <i class="fas fa-map-marker-alt text-white text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-gray-900 font-semibold text-lg">Adres</p>
-                                <p class="text-accent font-medium">İstanbul, Türkiye</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-8 gem-shadow hover-lift animate-slideInRight">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                        <i class="fas fa-paper-plane mr-3 text-primary"></i>
-                        Mesaj Gönderin
-                    </h3>
-                    <form class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-3">Ad Soyad</label>
-                            <input type="text" class="w-full px-6 py-3 border-2 border-purple-100 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-3">E-posta</label>
-                            <input type="email" class="w-full px-6 py-3 border-2 border-purple-100 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-3">Mesaj</label>
-                            <textarea rows="4" class="w-full px-6 py-3 border-2 border-purple-100 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300"></textarea>
-                        </div>
-                        <button type="submit" class="w-full rarity-gradient text-white py-4 rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 font-semibold text-lg flex items-center justify-center">
-                            <i class="fas fa-sparkles mr-3"></i>
-                            Mesaj Gönder
-                            <i class="fas fa-arrow-right ml-3"></i>
+                    <div class="nav-menu">
+                        <a href="#" class="nav-link active">Home</a>
+                        <a href="#features" class="nav-link">Features</a>
+                        <a href="#services" class="nav-link">Services</a>
+                        <a href="#apps" class="nav-link">Apps</a>
+                        <a href="#testimonials" class="nav-link">Testimonials</a>
+                        <a href="contact.html" class="nav-link">Contact</a>
+                        <button id="theme-toggle" class="theme-toggle">
+                            <i data-lucide="moon" class="theme-icon"></i>
                         </button>
-                    </form>
+                    </div>
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                        <i data-lucide="menu"></i>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="badge">Cutting-Edge Software Solutions</div>
+                        <h1 class="hero-title">
+                            <span class="title-primary">Build the</span>
+                            <br>
+                            <span class="title-accent">Digital Future</span>
+                        </h1>
+                        <p class="hero-description">
+                            Transform your business with innovative software solutions. We create powerful applications,
+                            seamless integrations, and scalable platforms that drive growth and efficiency.
+                        </p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary">
+                                Start Your Project
+                                <i data-lucide="chevron-right"></i>
+                            </button>
+                        </div>
+                        <div class="hero-features">
+                            <div class="feature-item">
+                                <div class="status-dot"></div>
+                                <span>24/7 Support</span>
+                            </div>
+                            <div class="feature-item">
+                                <i data-lucide="check-circle"></i>
+                                <span>Agile Development</span>
+                            </div>
+                            <div class="feature-item">
+                                <i data-lucide="shield"></i>
+                                <span>Secure & Scalable</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <div class="dashboard-card">
+                            <img src="static/Dashboard3.png" alt="Software Development Dashboard">
+                            <div class="live-badge">Always in Action</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
-    <footer class="bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white py-16 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-10 left-20 text-3xl animate-float">💎</div>
-            <div class="absolute bottom-10 right-20 text-4xl animate-float" style="animation-delay: 1s;">✨</div>
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-5xl animate-float" style="animation-delay: 2s;">👑</div>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                <div class="animate-fadeInUp">
-                    <div class="flex items-center mb-6">
-                        <i class="fas fa-gem text-primary text-3xl mr-3 animate-sparkle"></i>
-                        <span class="text-2xl font-bold">Rarity Software</span>
-                        <span class="ml-3 text-sm text-purple-300">✨ Boutique</span>
-                    </div>
-                    <p class="text-gray-300 leading-relaxed mb-6">
-                        Geleceğin yazılımlarını bugün yaratıyoruz. İnovatif çözümler ve modern teknolojilerle yanınızdayız.
+        <!-- Company Overview -->
+        <section class="company-overview">
+            <div class="container">
+                <div class="section-content">
+                    <h2 class="section-title">
+                        <span class="title-primary">Innovating Software</span>
+                        <br>
+                        <span class="title-accent">Since 2021</span>
+                    </h2>
+                    <p class="section-description">
+                        Founded by industry veterans, Rarity Software specializes in creating cutting-edge software
+                        solutions that transform businesses. From mobile apps to enterprise platforms, we've delivered
+                        over 200 successful projects across 30+ industries, helping companies scale and innovate in the
+                        digital age.
                     </p>
-                    <p class="text-purple-200 italic text-sm">
-                        "Darling, excellence is not just a goal - it's our standard!" 💜
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">200+</div>
+                            <div class="stat-label">Projects Delivered</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">Client Satisfaction</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">30+</div>
+                            <div class="stat-label">Industries Served</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Why Choose Rarity Software</h2>
+                    <p class="section-description">
+                        We combine technical expertise with creative innovation to deliver software solutions that
+                        exceed expectations and drive real business results.
                     </p>
                 </div>
-                <div class="animate-fadeInUp" style="animation-delay: 0.2s;">
-                    <h3 class="text-xl font-bold mb-6 flex items-center">
-                        <i class="fas fa-link mr-2 text-secondary"></i>
-                        Hızlı Linkler
-                    </h3>
-                    <ul class="space-y-3">
-                        <li><a href="#anasayfa" class="text-gray-300 hover:text-primary transition duration-300 flex items-center group">
-                            <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform"></i>
-                            Ana Sayfa
-                        </a></li>
-                        <li><a href="#hakkimizda" class="text-gray-300 hover:text-secondary transition duration-300 flex items-center group">
-                            <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform"></i>
-                            Hakkımızda
-                        </a></li>
-                        <li><a href="#projeler" class="text-gray-300 hover:text-accent transition duration-300 flex items-center group">
-                            <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform"></i>
-                            Projeler
-                        </a></li>
-                        <li><a href="#ekip" class="text-gray-300 hover:text-primary transition duration-300 flex items-center group">
-                            <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform"></i>
-                            Ekibimiz
-                        </a></li>
-                    </ul>
-                </div>
-                <div class="animate-fadeInUp" style="animation-delay: 0.4s;">
-                    <h3 class="text-xl font-bold mb-6 flex items-center">
-                        <i class="fas fa-heart mr-2 text-pink-400"></i>
-                        Takip Edin
-                    </h3>
-                    <div class="flex space-x-4 mb-6">
-                        <a href="#" class="bg-white/10 backdrop-blur-sm w-12 h-12 rounded-full flex items-center justify-center text-gray-300 hover:text-white hover:bg-primary transition-all duration-300 hover:scale-110 hover:rotate-12">
-                            <i class="fab fa-github text-xl"></i>
-                        </a>
-                        <a href="#" class="bg-white/10 backdrop-blur-sm w-12 h-12 rounded-full flex items-center justify-center text-gray-300 hover:text-white hover:bg-secondary transition-all duration-300 hover:scale-110 hover:rotate-12">
-                            <i class="fab fa-linkedin text-xl"></i>
-                        </a>
-                        <a href="#" class="bg-white/10 backdrop-blur-sm w-12 h-12 rounded-full flex items-center justify-center text-gray-300 hover:text-white hover:bg-accent transition-all duration-300 hover:scale-110 hover:rotate-12">
-                            <i class="fab fa-twitter text-xl"></i>
-                        </a>
-                        <a href="#" class="bg-white/10 backdrop-blur-sm w-12 h-12 rounded-full flex items-center justify-center text-gray-300 hover:text-white hover:bg-pink-500 transition-all duration-300 hover:scale-110 hover:rotate-12">
-                            <i class="fab fa-instagram text-xl"></i>
-                        </a>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i data-lucide="code"></i>
+                        </div>
+                        <h3 class="feature-title">Custom Development</h3>
+                        <p class="feature-description">
+                            Tailored software solutions built from the ground up to meet your specific business
+                            requirements and objectives.
+                        </p>
                     </div>
-                    <div class="text-gray-400 text-sm">
-                        <p class="mb-2">💎 Let's create magic together!</p>
-                        <p>✨ Follow us for fabulous updates</p>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i data-lucide="zap"></i>
+                        </div>
+                        <h3 class="feature-title">Rapid Deployment</h3>
+                        <p class="feature-description">
+                            Agile development methodology ensures fast delivery without compromising quality or
+                            functionality.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i data-lucide="shield"></i>
+                        </div>
+                        <h3 class="feature-title">Enterprise Security</h3>
+                        <p class="feature-description">
+                            Bank-level security protocols and compliance standards to protect your data and user
+                            information.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i data-lucide="cloud"></i>
+                        </div>
+                        <h3 class="feature-title">Cloud Integration</h3>
+                        <p class="feature-description">
+                            Seamless cloud deployment and integration with AWS, Azure, and Google Cloud platforms.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i data-lucide="users"></i>
+                        </div>
+                        <h3 class="feature-title">24/7 Support</h3>
+                        <p class="feature-description">
+                            Round-the-clock technical support and maintenance to ensure your applications run smoothly.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i data-lucide="bar-chart-3"></i>
+                        </div>
+                        <h3 class="feature-title">Scalable Solutions</h3>
+                        <p class="feature-description">
+                            Built to grow with your business, our solutions scale seamlessly from startup to enterprise
+                            level.
+                        </p>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-purple-800/50 mt-12 pt-8 text-center animate-fadeInUp" style="animation-delay: 0.6s;">
-                <p class="text-gray-400 flex items-center justify-center">
-                    <i class="fas fa-copyright mr-2"></i>
-                    2025 Rarity Software. Tüm hakları saklıdır. 
-                    <span class="ml-2 text-purple-300">Made with 💜 & ✨</span>
-                </p>
+        </section>
+
+        <!-- Our Services Section -->
+        <section id="services" class="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Our Services</h2>
+                    <p class="section-description">
+                        Comprehensive software development services to bring your vision to life
+                    </p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i data-lucide="globe"></i>
+                        </div>
+                        <h3 class="service-title">Web Development</h3>
+                        <p class="service-description">
+                            Modern, responsive websites and web applications built with the latest technologies.
+                        </p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i data-lucide="smartphone"></i>
+                        </div>
+                        <h3 class="service-title">Mobile Apps</h3>
+                        <p class="service-description">
+                            Native and cross-platform mobile applications for iOS and Android devices.
+                        </p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i data-lucide="database"></i>
+                        </div>
+                        <h3 class="service-title">Backend Systems</h3>
+                        <p class="service-description">
+                            Robust APIs, databases, and server infrastructure to power your applications.
+                        </p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i data-lucide="cpu"></i>
+                        </div>
+                        <h3 class="service-title">AI Integration</h3>
+                        <p class="service-description">
+                            Machine learning and AI-powered features to enhance your software capabilities.
+                        </p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </footer>
+        </section>
 
-    <!-- JavaScript for enhanced interactions -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu functionality
-            const mobileMenuButton = document.querySelector('.mobile-menu-button');
-            const mobileMenu = document.querySelector('.mobile-menu');
+        <!-- Our Apps Section -->
+        <section id="apps" class="apps">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Our Apps</h2>
+                    <p class="section-description">
+                        Innovative applications we've built that are making a difference
+                    </p>
+                </div>
+                <div class="apps-grid">
+                    <div class="app-card">
+                        <div class="app-image">
+                            <img src="./static/TaskFlow.png" alt="TaskFlow App">
+                            <div class="app-category">Productivity</div>
+                        </div>
+                        <div class="app-content">
+                            <div class="app-header">
+                                <i data-lucide="monitor"></i>
+                                <h3 class="app-title">TaskFlow</h3>
+                            </div>
+                            <p class="app-description">
+                                A comprehensive project management platform that helps teams collaborate efficiently and
+                                track progress in real-time.
+                            </p>
+                            <div class="app-footer">
+                                <div class="app-rating">
+                                    <div class="stars">
+                                        <i data-lucide="star" class="star-filled"></i>
+                                        <i data-lucide="star" class="star-filled"></i>
+                                        <i data-lucide="star" class="star-filled"></i>
+                                        <i data-lucide="star" class="star-filled"></i>
+                                        <i data-lucide="star" class="star-filled"></i>
+                                    </div>
+                                    <span class="rating-text">4.9</span>
+                                </div>
+                                <button class="btn btn-outline btn-sm">Learn More</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-image">
+                            <img src="./static/DataViz.png" alt="DataViz App">
+                            <div class="app-category">Analytics</div>
+                        </div>
+                        <div class="app-content">
+                            <div class="app-header">
+                                <i data-lucide="bar-chart-3"></i>
+                                <h3 class="app-title">FinDash</h3>
+                            </div>
+                            <p class="app-description">
+                                Advanced financial data visualization tool that transforms complex datasets into
+                                beautiful, interactive charts and dashboards.
+                            </p>
+                            <div class="app-footer">
+                                <div class="app-rating">
+                                    <div class="stars">
+                                        <i data-lucide="star" class="star-filled"></i>
+                                        <i data-lucide="star" class="star-filled"></i>
+                                        <i data-lucide="star" class="star-filled"></i>
+                                        <i data-lucide="star" class="star-filled"></i>
+                                        <i data-lucide="star" class="star-filled"></i>
+                                    </div>
+                                    <span class="rating-text">4.8</span>
+                                </div>
+                                <button class="btn btn-outline btn-sm">Learn More</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-image">
+                            <img src="./static/CreativeStudio.png" alt="CreativeStudio App">
+                            <div class="app-category">Design</div>
+                        </div>
+                        <div class="app-content">
+                            <div class="app-header">
+                                <i data-lucide="palette"></i>
+                                <h3 class="app-title">CreativeStudio</h3>
+                            </div>
+                            <p class="app-description">
+                                Professional design suite with AI-powered tools for creating stunning graphics, logos,
+                                and marketing materials.
+                            </p>
+                            <div class="app-footer">
+                                <div class="app-rating">
+                                    <div class="stars">
+                                        <i data-lucide="star" class="star-filled"></i>
+                                        <i data-lucide="star" class="star-filled"></i>
+                                        <i data-lucide="star" class="star-filled"></i>
+                                        <i data-lucide="star" class="star-filled"></i>
+                                        <i data-lucide="star" class="star-filled"></i>
+                                    </div>
+                                    <span class="rating-text">4.7</span>
+                                </div>
+                                <button class="btn btn-outline btn-sm">Learn More</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            mobileMenuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
-                // Add rotation animation to hamburger icon
-                const icon = this.querySelector('i');
-                icon.classList.toggle('fa-bars');
-                icon.classList.toggle('fa-times');
-            });
+        <!-- Testimonials -->
+        <section id="testimonials" class="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">What Our Clients Say</h2>
+                    <p class="section-description">
+                        Don't just take our word for it - hear from the businesses we've helped transform
+                    </p>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i data-lucide="star" class="star-filled"></i>
+                            <i data-lucide="star" class="star-filled"></i>
+                            <i data-lucide="star" class="star-filled"></i>
+                            <i data-lucide="star" class="star-filled"></i>
+                            <i data-lucide="star" class="star-filled"></i>
+                        </div>
+                        <i data-lucide="quote" class="quote-icon"></i>
+                        <p class="testimonial-text">
+                            "Rarity Software delivered exactly what we needed. Their team understood our vision and
+                            created a platform that exceeded our expectations. The results speak for themselves."
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">SJ</div>
+                            <div class="author-info">
+                                <div class="author-name">Sarah Johnson</div>
+                                <div class="author-title">CEO, InnovateCorp</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i data-lucide="star" class="star-filled"></i>
+                            <i data-lucide="star" class="star-filled"></i>
+                            <i data-lucide="star" class="star-filled"></i>
+                            <i data-lucide="star" class="star-filled"></i>
+                            <i data-lucide="star" class="star-filled"></i>
+                        </div>
+                        <i data-lucide="quote" class="quote-icon"></i>
+                        <p class="testimonial-text">
+                            "The mobile app they built for us has been a game-changer. User engagement increased by 300%
+                            and our revenue grew significantly. Highly recommended!"
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">MR</div>
+                            <div class="author-info">
+                                <div class="author-name">Michael Rodriguez</div>
+                                <div class="author-title">Founder, RetailPlus</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i data-lucide="star" class="star-filled"></i>
+                            <i data-lucide="star" class="star-filled"></i>
+                            <i data-lucide="star" class="star-filled"></i>
+                            <i data-lucide="star" class="star-filled"></i>
+                            <i data-lucide="star" class="star-filled"></i>
+                        </div>
+                        <i data-lucide="quote" class="quote-icon"></i>
+                        <p class="testimonial-text">
+                            "Professional, reliable, and innovative. Rarity Software transformed our outdated systems
+                            into a modern, efficient platform. The support has been outstanding."
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">EC</div>
+                            <div class="author-info">
+                                <div class="author-name">Emily Chen</div>
+                                <div class="author-title">CTO, HealthTech Solutions</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            // Close mobile menu when clicking on a link
-            const mobileLinks = mobileMenu.querySelectorAll('a');
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    mobileMenu.classList.add('hidden');
-                    const icon = mobileMenuButton.querySelector('i');
-                    icon.classList.add('fa-bars');
-                    icon.classList.remove('fa-times');
-                });
-            });
+        <!-- CTA Section -->
+        <section id="contact" class="cta">
+            <div class="container">
+                <div class="cta-content">
+                    <div class="cta-card">
+                        <h2 class="cta-title">
+                            <span class="title-primary">Ready to Build</span>
+                            <br>
+                            <span class="title-accent">Something Amazing?</span>
+                        </h2>
+                        <p class="cta-description">
+                            Let's discuss your project and turn your ideas into reality. Get a free consultation and
+                            project estimate from our expert team.
+                        </p>
+                        <div class="cta-buttons">
+                            <button class="btn btn-primary">
+                                Start Your Project
+                                <i data-lucide="chevron-right"></i>
+                            </button>
+                            <button class="btn btn-outline">Schedule Consultation</button>
+                        </div>
+                        <div class="cta-features">
+                            <div>✓ Free initial consultation • ✓ Custom project proposal • ✓ No obligation quote</div>
+                            <div>✓ 30-day money-back guarantee • ✓ Ongoing support included</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            // Smooth scrolling for anchor links with offset for fixed navbar
-            const anchorLinks = document.querySelectorAll('a[href^="#"]');
-            anchorLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        const offsetTop = targetElement.offsetTop - 80; // Account for fixed navbar
-                        window.scrollTo({
-                            top: offsetTop,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <div class="footer-brand">
+                            <div class="logo">
+                                <i data-lucide="code"></i>
+                            </div>
+                            <span class="brand-text">Rarity Software</span>
+                        </div>
+                        <p class="footer-description">
+                            Innovative software solutions for the digital age. Building the future, one application at a
+                            time.
+                        </p>
+                    </div>
+                    <div class="footer-section"></div>
+                    <div class="footer-section"></div>
+                    <div class="footer-section">
+                        <h4 class="footer-title">Connect</h4>
+                        <div class="footer-links">
+                            <a href="mailto:hello@raritysoftware.com" class="footer-link">hello@raritysoftware.com</a>
+                            <a href="tel:+1234567890" class="footer-link">+1 (234) 567-8900</a>
+                            <a href="#" class="footer-link">LinkedIn</a>
+                            <a href="#" class="footer-link">Twitter</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Rarity Software. All rights reserved. | Designed by <a href="https://the-abra.github.io">the-abra</a></p>
+                </div>
+            </div>
+        </footer>
+    </div>
 
-            // Intersection Observer for animations
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate-fadeInUp');
-                    }
-                });
-            }, observerOptions);
-
-            // Observe all sections for scroll animations
-            const sections = document.querySelectorAll('section');
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-
-            // Navbar background is now always white - removed scroll effect
-            // window.addEventListener('scroll', function() {
-            //     const navbar = document.querySelector('nav');
-            //     if (window.scrollY > 50) {
-            //         navbar.classList.add('bg-white/95');
-            //         navbar.classList.add('backdrop-blur-sm');
-            //     } else {
-            //         navbar.classList.remove('bg-white/95');
-            //         navbar.classList.remove('backdrop-blur-sm');
-            //     }
-            // });
-
-            // Add sparkle effects on click
-            document.addEventListener('click', function(e) {
-                if (e.target.closest('.gem-shadow, .rarity-gradient, .hover-lift')) {
-                    createSparkleEffect(e.pageX, e.pageY);
-                }
-            });
-
-            function createSparkleEffect(x, y) {
-                const sparkles = ['✨', '💎', '⭐', '💜'];
-                for (let i = 0; i < 5; i++) {
-                    const sparkle = document.createElement('div');
-                    sparkle.innerHTML = sparkles[Math.floor(Math.random() * sparkles.length)];
-                    sparkle.style.position = 'fixed';
-                    sparkle.style.left = (x - 10 + Math.random() * 20) + 'px';
-                    sparkle.style.top = (y - 10 + Math.random() * 20) + 'px';
-                    sparkle.style.fontSize = '1.5rem';
-                    sparkle.style.pointerEvents = 'none';
-                    sparkle.style.zIndex = '9999';
-                    sparkle.style.animation = 'sparkleUp 1s ease-out forwards';
-                    document.body.appendChild(sparkle);
-
-                    setTimeout(() => {
-                        sparkle.remove();
-                    }, 1000);
-                }
-            }
-
-            // Add CSS for sparkle animation
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes sparkleUp {
-                    0% {
-                        opacity: 1;
-                        transform: translateY(0) scale(1);
-                    }
-                    100% {
-                        opacity: 0;
-                        transform: translateY(-50px) scale(0.5);
-                    }
-                }
-                
-                @keyframes spin-slow {
-                    from { transform: rotate(0deg); }
-                    to { transform: rotate(360deg); }
-                }
-                
-                .animate-spin-slow {
-                    animation: spin-slow 3s linear infinite;
-                }
-                
-                /* Parallax effect for floating gems */
-                .floating-gems {
-                    transform: translateZ(0);
-                }
-                
-                /* Enhanced hover effects */
-                .group:hover .animate-bounce {
-                    animation-play-state: running;
-                }
-                
-                .text-sparkle:hover {
-                    animation-duration: 1s;
-                }
-            `;
-            document.head.appendChild(style);
-
-            // Contact form enhancement
-            const contactForm = document.querySelector('form');
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    // Add submitting state
-                    const submitButton = this.querySelector('button[type="submit"]');
-                    const originalText = submitButton.innerHTML;
-                    submitButton.innerHTML = '<i class="fas fa-sparkles animate-spin mr-2"></i>Büyü Yapılıyor...';
-                    submitButton.disabled = true;
-                    
-                    // Simulate form submission
-                    setTimeout(() => {
-                        submitButton.innerHTML = '<i class="fas fa-check mr-2"></i>Mesajınız Ulaştı! ✨';
-                        submitButton.classList.add('bg-green-500', 'hover:bg-green-600');
-                        submitButton.classList.remove('bg-primary', 'hover:bg-indigo-700');
-                        
-                        setTimeout(() => {
-                            submitButton.innerHTML = originalText;
-                            submitButton.disabled = false;
-                            submitButton.classList.remove('bg-green-500', 'hover:bg-green-600');
-                            submitButton.classList.add('bg-primary', 'hover:bg-indigo-700');
-                            this.reset();
-                        }, 3000);
-                    }, 2000);
-                });
-            }
-
-            // Add typing effect to hero title - DISABLED to prevent HTML corruption
-            // const heroTitle = document.querySelector('#anasayfa h1');
-            // if (heroTitle) {
-            //     const words = heroTitle.innerHTML.split(' ');
-            //     heroTitle.innerHTML = '';
-            //     
-            //     words.forEach((word, index) => {
-            //         setTimeout(() => {
-            //             heroTitle.innerHTML += word + ' ';
-            //             if (word.includes('✨')) {
-            //                 createSparkleEffect(
-            //                     heroTitle.offsetLeft + heroTitle.offsetWidth,
-            //                     heroTitle.offsetTop + heroTitle.offsetHeight / 2
-            //                 );
-            //             }
-            //         }, index * 200);
-            //     });
-            // }
-
-            // Console easter egg for Rarity fans
-            console.log(`
-            💎✨ Welcome to Rarity Software! ✨💎
-            
-            "Darling, you have exquisite taste in visiting our console!"
-            
-            🦄 Fun fact: This website is inspired by Rarity from My Little Pony
-            👑 We believe in generosity, excellence, and fabulous code!
-            
-            Looking for a job? Send us a message with the code: "FABULOUS_DEV"
-            ✨ Let's create something beautiful together! ✨
-            `);
-        });
-    </script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
